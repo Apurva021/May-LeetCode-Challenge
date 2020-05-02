@@ -1,0 +1,24 @@
+This is a simple binary search problem. We can consider the n versions of the softwares as a boolean array. Where the ith index is true
+if that version is bad else that index holds false. So our problem is to find the occurence of 1st true in the array. This can be 
+done in O(log n) using binarySearch.
+
+public class Solution extends VersionControl {
+    public int firstBadVersion(int n) {
+        int l=1,r=n,ans=n;
+        while(l<=r)
+        {
+            int mid=l+(r-l)/2;
+            
+            if(isBadVersion(mid))
+            {
+                ans=mid;
+                r=mid-1;
+            }
+            else
+            {
+                l=mid+1;
+            }
+        }
+        return ans;
+    }
+}

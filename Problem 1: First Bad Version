@@ -2,6 +2,9 @@ This is a simple binary search problem. We can consider the n versions of the so
 if that version is bad else that index holds false. So our problem is to find the occurence of 1st true in the array. This can be 
 done in O(log n) using binarySearch.
 
+A good resource to undersand the binary search algorithm and some of it's application is this video by Errichto:
+https://youtu.be/GU7DpgHINWQ.
+
 public class Solution extends VersionControl {
     public int firstBadVersion(int n) {
         int l=1,r=n,ans=n;

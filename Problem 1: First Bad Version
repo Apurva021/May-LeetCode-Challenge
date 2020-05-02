@@ -5,6 +5,7 @@ done in O(log n) using binarySearch.
 A good resource to undersand the binary search algorithm and some of it's application is this video by Errichto:
 https://youtu.be/GU7DpgHINWQ.
 
+``` java
 public class Solution extends VersionControl {
     public int firstBadVersion(int n) {
         int l=1,r=n,ans=n;
@@ -25,3 +26,4 @@ public class Solution extends VersionControl {
         return ans;
     }
 }
+```

@@ -1,0 +1,18 @@
+In this problem we are given 2 strings J and S. And we have to count the number of characters in the String S which are also present in 
+the String J. And this can be efficiently done by making use of a HashSet<Character>. First we add all characters of the String J 
+in the set.Initialize a counter=0.Then while iterating over the String S we check if the current character is present in the set. 
+If it is present, we increment the counter. And finaly we return the counter.
+
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        HashSet<Character> set = new HashSet<>();
+        for(char c:J.toCharArray()) set.add(c);
+        
+        int ans=0;
+        for(char c:S.toCharArray())
+        {
+            if(set.contains(c)) ans++;
+        }
+        return ans;
+    }
+}

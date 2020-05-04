@@ -1,0 +1,38 @@
+In this question we need to find the complement of the given decimal number in binary, and then return the decimal representation
+of the complement.
+ First I found the number of bits required to represent the given number by inititalizing a counter=0 and then repeatedly dividing the
+ number by 2 and increasing the counter while the number is greater than 0.
+ then in order to find the binary representaion of the number I have checked whether each bit position of the number is binary is 0 or 1.
+ and complemented it. this task is done in the toBinaryComplement function.
+ 
+ class Solution {
+    public int numOfBits(int num)
+    {
+        int bits=0;
+        while(num>0)
+        {
+            bits++;
+            num/=2;
+        }
+        return bits;
+    }
+    
+    public String toBinaryComplement(int num, int n)
+    {
+        StringBuilder ans = new StringBuilder();
+        for(int i=n-1;i>=0;--i)
+        {
+            int mask=1<<i;
+            if((mask&num) !=0) ans.append("0");
+            else ans.append("1");
+        }
+        return ans.toString();
+    }
+    
+    public int findComplement(int num) {
+        
+        int n=numOfBits(num);
+        String complement=toBinaryComplement(num,n);
+        return Integer.parseInt(complement,2);
+    }
+}

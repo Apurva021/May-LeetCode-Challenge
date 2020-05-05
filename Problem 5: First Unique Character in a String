@@ -1,0 +1,26 @@
+In this question first we will iterate over the given string and find the frequency of each charracter present in the string.
+We will create and array of size 26 to store the frequency of each character.
+Now we will iterate over the string again, and we will return the index of the first character whose frequency is 1.
+If no character has frequency 1 then we whave to return -1.
+
+class Solution {
+    public int firstUniqChar(String s) {
+        int freq[]=new int[26];
+        int ans=-1;
+        char ch[]=s.toCharArray();
+        for(char c:ch)
+        {
+            freq[c-'a']++;
+        }
+        
+        for(int i=0;i<ch.length;++i)
+        {
+            if(freq[ch[i]-'a']==1)
+            {
+                ans=i;
+                break;
+            }
+        }
+        return ans;
+    }
+}

@@ -1,0 +1,15 @@
+The key point of observation in solving this question is that if the array contains an element whose frequency is greater than floor(n/2)
+(here n is the number of elements in the array) then when the array is sorted the index n/2 will always have the element whose frequency 
+is greater than floor(n/2). So we just need to sort the array, and return arr[n/2].
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+        Arrays.sort(nums);
+        return nums[n/2];
+    }
+}
+
+However the complexity of the above solution is O(n*log(n)) because of sorting.
+We can also have a linear solution using a HashMap. we store the frequency of all elements. Then we iterate over the map and return 
+the element whose frequency is greater than floor(n/2).

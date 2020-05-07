@@ -1,0 +1,75 @@
+Before solving the question it is essential to understand which nodes are the cousins in a binary tree.
+By defination any 2 nodes which are at the same depth, but have different parents are called counsins.
+So we just need to traverse over the binary tree and keep a track of depth and parent for each node.
+This can be easily done by Breadth First Search(BFS).
+ 
+ 
+ /**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isCousins(TreeNode root, int x, int y) {
+        LinkedList<Pair> queue = new LinkedList<>();
+        int parent_x=0,parent_y=0,depth_x=0,depth_y=0;
+        queue.add(new Pair(root,-1,0));
+        while(!queue.isEmpty())
+        {
+            Pair p = queue.pollFirst();
+            TreeNode node=p.root;
+            if(node.val==x)
+            {
+                parent_x=p.parent;
+                depth_x=p.depth;
+            }
+            
+            if(node.val==y)
+            {
+                parent_y=p.parent;
+                depth_y=p.depth;
+            }
+            
+            if(node.left!=null)
+            {
+                queue.add(new Pair(node.left,node.val,p.depth+1));
+            }
+            
+            if(node.right!=null)
+            {
+                queue.add(new Pair(node.right,node.val,p.depth+1));
+            }
+        }
+        
+        if(parent_x!=parent_y && depth_x==depth_y) return true;
+        else return false;
+    }
+}
+
+class Pair
+{
+    TreeNode root;
+    int parent,depth;
+    Pair(TreeNode r,int p, int d)
+    {
+        root=r;
+        parent=p;
+        depth=d;
+    }
+}
+
+
+I have created the class Pair in order to bind a node with its parent and its depth in the tree.
+As soon as i encounter the node with value x i have updated the parent_x and depth_y.
+Same thing is done if i encounter the node with value y.
+Now at last we just need to check if (depth_x==depthy && parent_x!=parent_y) return true else return false.

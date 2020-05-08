@@ -1,0 +1,33 @@
+So this problem can be solved in O(n) time using some simple geometry.
+For this we should know how to find the slope of line connecting two points (x0,y0) and (x1,y1)
+slope=(y1-y0)/(x1-x0)
+Now we shall select a point let's say P0 with cordinates (x0,y0)
+Now we find the slope of all lines connecting P0 with other points 
+If all these slopes turn out to be same then all the points are present on the same line ans we return true
+Else we return false.
+
+Because the slope may be double take care of the type casting.
+class Solution {
+    public boolean checkStraightLine(int[][] coordinates) {
+        boolean isLinear=true;
+        int n=coordinates.length;
+        if(n<3) return isLinear;
+        else
+        {
+            double slope=(double)coordinates[1][1]-(double)coordinates[0][1];
+            slope/=((double)coordinates[1][0]-(double)coordinates[0][0]);
+            
+            for(int i=2;i<n;++i)
+            {
+                double temp=(double)coordinates[i][1]-(double)coordinates[0][1];
+                temp/=((double)coordinates[i][0]-(double)coordinates[0][0]);
+                if(temp!=slope)
+                {
+                    isLinear=false;
+                    break;
+                }
+            }
+            return isLinear;
+        }
+    }
+}

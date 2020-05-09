@@ -1,0 +1,24 @@
+So this is a very good application of binary search.
+We initialize left=1 and right=num;
+mid=left+(right-left)/2 // this is done in order to avoid overflow
+if mid*mid==num return true;
+else if mid*mid>num right=mid-1;
+else left=mid+1
+
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        int l=1,r=num;
+        while(l<=r && l>0)
+        {
+            int mid=l+((r-l)/2);
+            long n=(long)mid*(long)mid;     // this is again done to avoid overflow
+            if(n==num)
+            {
+                return true;
+            }
+            else if(n>num) r=mid-1;
+            else l=mid+1;
+        }
+        return false;
+    }
+}

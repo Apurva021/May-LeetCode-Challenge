@@ -1,0 +1,14 @@
+This is a pretty famous appllication of xor.
+The key observations to be  made here are: a^a=0  and  a^0=a
+so when take the xor of all elements of array the ans we get is the single unique element
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int ans=nums[0];
+        for(int i=1;i<nums.length;++i)
+        {
+            ans^=nums[i];
+        }
+        return ans;
+    }
+}

@@ -1,0 +1,43 @@
+This question has to solved using a stack.
+The key point of observation is that while iterating over the digits of the given number it is always beneficial for us to remove all
+previous consecutive digits which are greater than the current digit.
+
+class Solution {
+    public String removeKdigits(String num, int k) {
+        if(num.length()==0) return "0";
+        if(k>=num.length()) return "0";
+        Stack<Character> stack = new Stack<>();
+        
+        for(char c:num.toCharArray())
+        {
+            while(!stack.isEmpty() && stack.peek()>c && k>0)
+            {
+                stack.pop();
+                k--;
+            }
+            stack.push(c);
+           // System.out.println(stack);
+        }
+        
+        while(k>0 && !stack.isEmpty())
+        {
+            stack.pop();
+            k--;
+        }
+        StringBuilder temp = new StringBuilder();
+        while(!stack.isEmpty()) temp.append(stack.pop());
+        temp=temp.reverse();
+        char ch[]=temp.toString().toCharArray();
+        StringBuilder ans = new StringBuilder();
+        int i=0;
+        while(i<ch.length && ch[i]=='0') i++;
+        while(i<ch.length)
+        {
+            ans.append(ch[i]);
+            i++;
+        }
+        
+        if(ans.length()==0) return "0";
+        else return ans.toString();
+    }
+}

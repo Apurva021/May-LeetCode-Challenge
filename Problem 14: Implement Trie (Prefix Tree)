@@ -1,0 +1,124 @@
+This question asks us implement trie data structure which has several useful applications like autocomplete search suggestions and ip routing.
+The question is easily solvable if we understand the concept. The video below is a useful resource.
+https://www.youtube.com/watch?v=YG6iX28hmd0&t=804s
+
+I have created a class Node which has 3 attributes.
+char c is used to keep track of current character
+ArrayList<Node> is used to keep a reference to all children nodes of the current character.
+boolean endsHere is a flag to keep track of whether there is any word in the dictionary which ends at current character.
+
+
+
+
+
+class Trie {
+    
+    Node Root;
+
+    /** Initialize your data structure here. */
+    public Trie() {
+        Root=new Node('#');
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        Node root=Root;
+        char s[]=word.toCharArray();
+        int i=0;
+        while(i<s.length)
+        {
+            boolean f=false;
+            for(Node node:root.al)
+            {
+                if(node.c==s[i])
+                {
+                    root=node;
+                    f=true;
+                    break;
+                }
+            }
+            
+            if(!f)
+            {
+                root.al.add(new Node(s[i]));
+                root=root.al.get(root.al.size()-1);
+            }
+            i++;
+        }
+        
+        root.endsHere=true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        Node root=Root;
+        char s[]=word.toCharArray();
+        int i=0;
+        boolean f=true;
+        while(i<s.length)
+        {
+            boolean found=false;
+            for(Node node:root.al)
+            {
+                if(node.c==s[i])
+                {
+                    found=true;
+                    root=node;
+                    break;
+                }
+            }
+            
+            if(!found)
+            {
+                f=false;
+                break;
+            }
+            i++;
+        }
+        
+        if(f && !root.endsHere) f=false;
+        return f;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        Node root=Root;
+        char s[]=prefix.toCharArray();
+        int i=0;
+        boolean f=true;
+        while(i<s.length)
+        {
+            boolean found=false;
+            for(Node node:root.al)
+            {
+                if(node.c==s[i])
+                {
+                    found=true;
+                    root=node;
+                    break;
+                }
+            }
+            
+            if(!found)
+            {
+                f=false;
+                break;
+            }
+            i++;
+        }
+        return f;
+    }
+}
+
+class Node
+{
+    char c;
+    ArrayList<Node> al;
+    boolean endsHere;
+    Node(char c)
+    {
+        this.c=c;
+        al=new ArrayList<Node>();
+        endsHere=false;
+    }
+}

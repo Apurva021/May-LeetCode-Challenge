@@ -1,0 +1,35 @@
+If the list is empty or contains a single node then we can directly return the head.
+In other cases we need 3 references 
+odd--> to traverse over the odd nodes
+even--> to traverse over the even nodes
+even_head--> to remember the head of the even nodes
+
+now if even.next exists it implies it is the next odd node
+so odd.next=even.next and then we shift from odd to odd.next by odd=odd.next
+
+now if odd.next exists it implies it is the next even node
+so even.next=odd.next and then we shift even=even.next
+
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        if(head==null || head.next==null) return head;    //in case list is empty or has only head 
+        
+        ListNode odd=head,even=head.next,even_head=head.next;
+        
+        while(true)
+        {
+            if(even.next==null) break;
+            odd.next=even.next;
+            odd=odd.next;
+            if(odd.next==null)
+            {
+                even.next=null;
+                break;
+            }
+            even.next=odd.next;
+            even=even.next;
+        }
+        odd.next=even_head;
+        return head;
+    }
+}

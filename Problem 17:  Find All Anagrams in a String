@@ -1,0 +1,65 @@
+First thing to notice is that because we have to find the anagrams of the string p, we are not concerned with the order of the characters
+and we just have to take care of the frequency of characters.
+
+I have created a hashmap hm to store the frequency of each character in the String p;
+
+Then i have created the array cnt[26][s.length] to store the freqeucy of each character in string s till the index i.
+
+Then i have used the sliding window approach to compare the frequency of each character in a window of length=p.length
+if the frequecy of all characters is same i incremented the counter else not.
+
+class Solution {
+    public List<Integer> findAnagrams(String str, String p) {
+        char s1[]=str.toCharArray();
+        char s2[]=p.toCharArray();
+        int n=s1.length,m=s2.length;
+        HashMap<Character,Integer> hm = new HashMap<Character,Integer>();
+        for(char c:s2)
+        {
+            hm.put(c,hm.getOrDefault(c,0)+1);
+        }
+        
+        int cnt[][]= new int[26][n];
+        for(int i=0;i<n;++i) cnt[s1[i]-'a'][i]++;
+        
+        for(int i=0;i<26;++i)
+        {
+            for(int j=1;j<n;++j)
+            {
+                cnt[i][j]+=cnt[i][j-1];
+            }
+        }
+        
+        List<Integer> list = new ArrayList<Integer>();
+        
+        for(int i=0,j=m-1;j<n;++j,++i)
+        {
+            boolean match=true;
+            for(int k=0;k<26;++k)
+            {
+                if(i==0)
+                {
+                    int f=cnt[k][j];
+                    if(f!=hm.getOrDefault((char)(k+'a'),0))
+                    {
+                        match=false;
+                        break;
+                    }
+                }
+                else
+                {
+                    int f=cnt[k][j]-cnt[k][i-1];
+                    if(f!=hm.getOrDefault((char)(k+'a'),0))
+                    {
+                        match=false;
+                        break;
+                    }
+                }
+            }
+            
+            if(match) list.add(i);
+        }
+        
+        return list;
+    }
+}

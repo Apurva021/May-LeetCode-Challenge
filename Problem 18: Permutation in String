@@ -1,0 +1,59 @@
+This question is also similar to yesterday's question because again we are interested only in the frequecy of the characters
+and not the order of the characters.
+
+I have created array f1[26] to store the frequency of all characters in s1.
+I have created array f2[26][n] to store the frequency of all characters in s2 till every index.
+
+Now i have used the slideing window approach to check whether any substring in s2 has the same frequency of all characters as that in s1.
+if any such substring is found we return true.
+
+class Solution {
+    public boolean checkInclusion(String str1, String str2) {
+        char s1[]=str1.toCharArray();
+        char s2[]=str2.toCharArray();
+        
+        //contains frequency of all characters in s1
+        int f1[]=new int[26];
+        for(char c:s1) f1[c-'a']++;
+        
+        int n=s2.length;
+        int m=s1.length;
+        //contains frequency of all characters in s2 till given length
+        int f2[][]= new int[26][n];
+        for(int i=0;i<n;++i)
+        {
+            f2[s2[i]-'a'][i]++;
+        }
+        
+        for(int i=0;i<26;++i)
+        {
+            for(int j=1;j<n;++j) f2[i][j]+=f2[i][j-1];
+        }
+        
+        boolean contains=false;
+        for(int i=0,j=m-1;j<n;++j,++i)
+        {
+            boolean f=true;
+            for(int k=0;k<26;++k)
+            {
+                int pref=0;
+                if(i==0) pref=f2[k][j];
+                else pref=f2[k][j]-f2[k][i-1];
+                
+                if(f1[k]!=pref)
+                {
+                    f=false;
+                    break;
+                }
+            }
+            
+            if(f)
+            {
+                contains=true;
+                break;
+            }
+        }
+        
+        return contains;
+    }
+}

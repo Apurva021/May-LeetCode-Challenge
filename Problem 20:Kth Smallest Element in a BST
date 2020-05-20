@@ -1,0 +1,24 @@
+The observation to solve this problem is that when we perform an inorder traversal over a BST then we get all the node values of the
+tree in a sorted order.
+So i have performed the inorder traversal over the tree and added all the elements into an arraylist.
+Then return the Kth element from the list.
+
+class Solution {
+    
+    ArrayList<Integer> al=new ArrayList<>();
+    
+    public void util(TreeNode root)
+    {
+        if(root.left!=null) util(root.left);
+        
+        al.add(root.val);
+        
+        if(root.right!=null) util(root.right);
+        
+    }
+    
+    public int kthSmallest(TreeNode root, int k) {
+        util(root);
+        return al.get(k-1);
+    }
+}

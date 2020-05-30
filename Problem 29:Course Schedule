@@ -1,0 +1,68 @@
+This is a really great problem which requires us to check whether exists a cycle in the given directed graph.
+So let all the courses be nodes.
+If course c1 can only be studied after course c2 let there be an edge c1-->c2.
+So we will never be able to complete the required number of courses if there exists any cycle in the graph.
+
+For checking if the cycle exists i have divided the vertices into three different categories:
+0--> the vertex is not yet visited
+1--> the vertex is visited but still some of its children are left to be explores
+2--> the vertex is visited and all of its childrem are explored
+
+So while we are exploring any node if we encouter any child such that visited[child]==1 then we can conclude that there is a cycle in graph.
+
+Solution
+
+class Solution {
+    ArrayList<Integer> al[];
+    int visited[];
+    
+    boolean isCyclic(int n)
+    {
+        boolean f=false;
+        for(int i=0;i<n;++i)
+        {
+            if(visited[i]==0)
+            {
+                f=dfsUtil(i);
+                if(f) break;
+            }
+        }
+        return f;
+    }
+    
+    boolean dfsUtil(int node)
+    {
+        visited[node]=1;
+        
+        for(int child:al[node])
+        {
+            if(visited[child]==1) return true;
+            else if(visited[child]==0)
+            {
+                if(dfsUtil(child)) return true;
+            }
+        }
+        visited[node]=2;
+        
+        return false;
+    }
+    
+    
+    
+    public boolean canFinish(int n, int[][] pre) {
+        al=new ArrayList[n];
+        for(int i=0;i<n;++i) al[i]=new ArrayList<Integer>();
+        visited=new int[n];
+        
+        for(int i=0;i<pre.length;++i)
+        {
+            al[pre[i][0]].add(pre[i][1]);
+        }
+        
+        boolean f=isCyclic(n);
+        //System.out.println("cycle:"+f);
+        
+        if(f) return false;
+        else return true;
+    }
+}
